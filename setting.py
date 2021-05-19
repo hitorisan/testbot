@@ -1,6 +1,5 @@
 import requests
 from datetime import datetime, timedelta, time
-import sqlite3 as sql
 import telebot
 import matplotlib.pyplot as plt
 
