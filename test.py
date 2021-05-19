@@ -14,9 +14,6 @@ def test_for_exchange():
     assert req3.check_for_exchange() == None
     assert req4.check_for_exchange() == None
 
-    assert req1.convert() == 8.19
-    assert req2.convert() == 163.88
-
 
 def test_for_history():
     req1 = History(['USD/EUR', 'for', '7', 'days'], ['USD', 'EUR'])
