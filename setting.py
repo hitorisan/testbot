@@ -97,7 +97,7 @@ class History:
     def check_for_history(self):
         if len(self.text) == 4 and in_list(self.text_cur[0]) and \
                 in_list(self.text_cur[1]):
-            if isinstance(int(self.text[2]), int) and self.text[1] == 'for' \
+            if isinstance(int(self.text[2]), int) and (0 < int(self.text[2]) <= 30) and self.text[1] == 'for' \
                     and self.text[3] == 'days':
                 return True
 
