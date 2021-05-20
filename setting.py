@@ -129,7 +129,7 @@ class History:
         y = [y[1] for y in val] # for rates
         size = (len(val)+2, len(val))
         fig, ax = plt.subplots(figsize=size)
-        ax.set_title(f'History {self.text[0]} {self.text[1]} {self.text[2]} {self.text[3]}')
+        ax.set_title(f'History {self.text_cur[0]}/{self.text_cur[1]} {self.text[1]} {self.text[2]} {self.text[3]}')
         ax.set_xlabel('Date')
         ax.set_ylabel('Rate')
         ax.grid(True)
