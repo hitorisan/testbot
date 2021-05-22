@@ -8,18 +8,20 @@ now = 0
 def str(msg):
     try:
         if msg.text == '/start':
-            ques = 'Hi. I will help you convert currency!\n' \
-                'There are my functions:\n' \
-                '/list - return list of all available rates (E.q.: AED: 3.67).\n' \
-                'And you should know - USD is my base currency.\n'\
-                '/exchange 10 USD to EUR - this command for converting currencies. ' \
-                'Just type how many you need to convert and currency which will convert. \n' \
-                'P.S.: I convert only from USD, ' \
-                'another currency I don`t like.\n'\
-                '/history USD/AMD for 7 days - will return an image graph which shows the exchange rate' \
-                'of the selected currency for the last 7 days. If you want, you can select another period,' \
-                'but I understand only integer and only days.'
-            bot.send_message(msg.chat.id, ques)
+            ques = 'Hi 🖐. I will help you convert currency 💲! \n' \
+                   'There are my functions:\n'
+            ques1 = '1️⃣  /list - return list of all available rates (E.q.: AED: 3.67).\n' \
+                    'And you should know - USD is my base currency.\n'
+            ques2 = '2️⃣  /exchange 10 USD to EUR - this command for converting currencies. ' \
+                    'Just type how many you need to convert and currency which will convert.'
+            ques3 = '3️⃣  /history USD/AMD for 7 days - will return an image graph ' \
+                    'which shows the exchange rate ' \
+                    'of the selected currency for the last 7 days. If you want, ' \
+                    'you can select another period,' \
+                    ' but I understand only integer and only days.'
+            msg_list = [ques, ques1, ques2, ques3]
+            for ms in msg_list:
+                bot.send_message(msg.chat.id, ms)
 
         elif msg.text == '/list':
             """
@@ -36,14 +38,9 @@ def str(msg):
                 lst.check_true(True)
 
             else:
+                now = datetime.now()
                 lst = Cur_list(msg)
                 lst.check_true(False)
-
-
-
-
-
-
 
 
         else:
@@ -54,7 +51,7 @@ def str(msg):
                 func = Exchange(text)
                 if func.check_for_exchange():
                     conv = func.convert()
-                    my_answer = f'{text[0]} {text[1].upper()} is {conv} {text[3].upper()}'
+                    my_answer = f'💸 {text[0]} {text[1].upper()} is {conv} {text[3].upper()}'
                     bot.send_message(msg.chat.id, my_answer)
                 else:
                     raise TypeError
@@ -77,13 +74,13 @@ def str(msg):
                         raise TypeError
 
                 else:
-                    raise TypeError
+                    raise TypeError or IndexError
 
             else:
                 raise TypeError
 
-    except TypeError:
-            my_answer = 'Sorry, I don`t understand you. Please, type a correct command.'
+    except TypeError or IndexError:
+            my_answer = '😓 Sorry, I don`t understand you. Please, type a correct command.'
             bot.send_message(msg.chat.id, my_answer)
 
 
