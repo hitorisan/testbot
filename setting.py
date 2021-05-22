@@ -4,9 +4,8 @@ import telebot
 import matplotlib.pyplot as plt
 
 
-token = '1549583803:AAH8qbTzM-n3h0cm9e3H7N6r2wuFTdQtHGQ'
+token = '1715572298:AAGwzI9oN3eloGcz7e5MV7ajLKgMOtt8bU0'
 bot = telebot.TeleBot(token)
-
 
 key = '194d689380926a95b1dae3c566834ac3'
 base_url = f'https://api.exchangeratesapi.io/v1/latest?access_key={key}&base=USD'
@@ -40,12 +39,12 @@ class Cur_list:
 
     def check_true(self, bool):
         if bool:
-            bot.send_message(self.msg.chat.id, 'There are new')
+            #bot.send_message(self.msg.chat.id, 'There are new')
             self.write_msg()
             self.send_msg()
         else:
             try:
-                bot.send_message(self.msg.chat.id, 'There are old')
+                #bot.send_message(self.msg.chat.id, 'There are old')
                 self.send_msg()
             except FileNotFoundError:
                 self.write_msg()
@@ -69,11 +68,11 @@ class Exchange:
     convert() returns converted currencies
     """
     def __init__(self, text):
-        self.text = [tx.upper() for tx in text ]
+        self.text = [tx.upper() for tx in text ] # make all big, e.q. ['10', 'USD', 'TO', 'UAH']
 
     def check_for_exchange(self):
         if len(self.text) == 4 and isinstance(float(self.text[0]), float) and \
-                (self.text[1] == 'USD'):
+                (self.text[1] == 'EUR' or in_list(self.text[1])):
             if (self.text[2].lower() == 'to') and in_list(self.text[3]):
                 return True
 
@@ -96,8 +95,8 @@ class History:
     def check_for_history(self):
         if len(self.text) == 4 and in_list(self.text_cur[0]) and \
                 in_list(self.text_cur[1]):
-            if isinstance(int(self.text[2]), int) and (0 < int(self.text[2]) <= 30) and self.text[1] == 'for' \
-                    and self.text[3] == 'days':
+            if isinstance(int(self.text[2]), int) and (0 < int(self.text[2]) <= 30) \
+                    and self.text[1] == 'for' and self.text[3] == 'days':
                 return True
 
     def history(self):
@@ -126,10 +125,11 @@ class History:
         msg - users request need for personally save jpg graph
         """
         x = [x[0] for x in val] # for dates
-        y = [y[1] for y in val] # for rates
+        y = [float(y[1]) for y in val] # for rates
         size = (len(val)+2, len(val))
         fig, ax = plt.subplots(figsize=size)
-        ax.set_title(f'History {self.text_cur[0]}/{self.text_cur[1]} {self.text[1]} {self.text[2]} {self.text[3]}')
+        ax.set_title(f'History {self.text_cur[0]}/{self.text_cur[1]} {self.text[1]} '
+                     f'{self.text[2]} {self.text[3]}')
         ax.set_xlabel('Date')
         ax.set_ylabel('Rate')
         ax.grid(True)
